@@ -12,9 +12,9 @@ Gib klinische Parameter ein und erhalte eine Wahrscheinlichkeit für kognitive V
 # Eingabeparameter
 st.header("📥 Eingabe")
 
-updrs = st.number_input("UPDRS (Baseline)", min_value=0.0, max_value=100.0, value=50.0)
-moca = st.number_input("MoCA (Baseline)", min_value=0.0, max_value=30.0, value=25.0)
-sn_score = st.number_input("SN_score (direkt eingeben)", min_value=0.0, max_value=2.0, value=0.9)
+updrs = st.number_input("UPDRS (Baseline)", min_value=0.0, max_value=100.0, value=20.0)
+moca = st.number_input("MoCA (Baseline)", min_value=0.0, max_value=30.0, value=28.0)
+sn_score = st.number_input("SN_score (direkt eingeben)", min_value=0.0, max_value=2.0, value=0.99)
 
 # SHAP-Schwellenwerte
 thresholds = {
