@@ -23,20 +23,28 @@ thresholds = {
     "SN_score": {"low": 0.857152416056056, "high": 0.94969650802802}
 }
 
-# Interpretationsfunktionen
-def interpret_score(value, low, high):
+# Interpretationen pro Wert mit je nach Richtung angepasster Logik
+def interpret_updrs(value, low, high):
     if value < low:
-        return ("🟦 Niedrig (wahrscheinlich kognitive Verbesserung)", 0.05)
+        return ("🟦 Niedrig (wahrscheinlich kognitive Verbesserung)", 0.1)
     elif value > high:
-        return ("🟥 Hoch (wahrscheinlich kognitive Verschlechterung)", 0.95)
+        return ("🟥 Hoch (wahrscheinlich kognitive Verschlechterung)", 0.9)
     else:
         return ("🟨 Zwischenbereich (unsichere Prognose)", 0.5)
 
-def interpret_updrs(value, low, high):
+def interpret_moca(value, low, high):
     if value < low:
-        return ("🟦 Niedrig (wahrscheinlich kognitive Verbesserung)", 0.05)
+        return ("🟥 Niedrig (wahrscheinlich kognitive Verschlechterung)", 0.9)
     elif value > high:
-        return ("🟥 Hoch (wahrscheinlich kognitive Verschlechterung)", 0.95)
+        return ("🟦 Hoch (wahrscheinlich kognitive Verbesserung)", 0.1)
+    else:
+        return ("🟨 Zwischenbereich (unsichere Prognose)", 0.5)
+
+def interpret_sn(value, low, high):
+    if value < low:
+        return ("🟥 Niedrig (wahrscheinlich kognitive Verschlechterung)", 0.9)
+    elif value > high:
+        return ("🟦 Hoch (wahrscheinlich kognitive Verbesserung)", 0.1)
     else:
         return ("🟨 Zwischenbereich (unsichere Prognose)", 0.5)
 
@@ -44,8 +52,8 @@ def interpret_updrs(value, low, high):
 st.header("📊 Prognose")
 
 updrs_text, updrs_prob = interpret_updrs(updrs, **thresholds["UPDRS"])
-moca_text, moca_prob = interpret_score(moca, **thresholds["MoCA"])
-sn_text, sn_prob = interpret_score(sn_score, **thresholds["SN_score"])
+moca_text, moca_prob = interpret_moca(moca, **thresholds["MoCA"])
+sn_text, sn_prob = interpret_sn(sn_score, **thresholds["SN_score"])
 
 st.markdown(f"**UPDRS:** {updrs_text}  ")
 st.markdown(f"**MoCA:** {moca_text}  ")
