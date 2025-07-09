@@ -3,7 +3,7 @@ import numpy as np
 
 # Seitenkonfiguration
 st.set_page_config(page_title="MoCA-Rechner", layout="centered")
-st.title("🧠 MoCA-Prognoserechner")
+st.title("🧠 MoCA-Prognoserechner nach DBS Operation bei Patienten mit Parkinson Erkrankung")
 
 st.markdown("""
 Gib klinische Parameter ein und erhalte eine Wahrscheinlichkeit für kognitive Verbesserung oder Verschlechterung basierend auf SHAP-basierten Schwellenwerten.
