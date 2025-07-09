@@ -59,12 +59,13 @@ st.markdown(f"**UPDRS:** {updrs_text}  ")
 st.markdown(f"**MoCA:** {moca_text}  ")
 st.markdown(f"**SN_score:** {sn_text}  ")
 
-# Durchschnittliche Wahrscheinlichkeit für Verschlechterung
-avg_prob = np.mean([updrs_prob, moca_prob, sn_prob])
+# 🧠 Gesamteinschätzung basierend auf Einzelbewertungen
+probs = [updrs_prob, moca_prob, sn_prob]
 
-if avg_prob >= 0.9:
-    st.error(f"Gesamteinschätzung: 🧠 Mit hoher Wahrscheinlichkeit kognitive **Verschlechterung** ({avg_prob*100:.1f}%)")
-elif avg_prob <= 0.1:
-    st.success(f"Gesamteinschätzung: ✅ Mit hoher Wahrscheinlichkeit kognitive **Verbesserung** ({(1-avg_prob)*100:.1f}%)")
+if all(p == 0.1 for p in probs):
+    st.success("Gesamteinschätzung: ✅ Mit hoher Wahrscheinlichkeit kognitive **Verbesserung** (alle Marker positiv)")
+elif all(p == 0.9 for p in probs):
+    st.error("Gesamteinschätzung: 🧠 Mit hoher Wahrscheinlichkeit kognitive **Verschlechterung** (alle Marker negativ)")
 else:
-    st.warning(f"Gesamteinschätzung: ⚖️ Unsichere Prognose ({avg_prob*100:.1f}% für Verschlechterung)")
+    avg_prob = np.mean(probs)
+    st.warning(f"Gesamteinschätzung: ⚖️ Uneinheitliche Marker – Prognose unsicher ({avg_prob*100:.1f}% für Verschlechterung)")
